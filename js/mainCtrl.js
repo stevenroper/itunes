@@ -32,7 +32,7 @@ app.controller('mainCtrl', function($scope, itunesService){
     
   $scope.getSongData = function() {
     itunesService.getByArtist($scope.artist).then(function(data) {
-      $scope.songData = sortData(data);
+      sortData(data);
     });
   }
 
@@ -55,38 +55,51 @@ app.controller('mainCtrl', function($scope, itunesService){
   //the iTunes API is going to give you a lot more details than ng-grid wants. Create a new array and then loop through the iTunes data pushing into your new array objects that look like the above data.
 
   function sortData(rawSongData) {
-    var newSongDataArray = [];
+    // VERSION 1 of sortData
+    // var newSongDataArray = [];
     
-    for(var i = 0; i < rawSongData.length; i++) {
-      newSongDataArray[i] = {};
-      for(var key in rawSongData[i]) {
-        switch(key) {
-          case 'artworkUrl30':
-            newSongDataArray[i].AlbumArt = rawSongData[i][key];
-            break;
-          case 'artistName':
-            newSongDataArray[i].Artist = rawSongData[i][key];
-            break;
-          case 'collectionName':
-            newSongDataArray[i].Collection = rawSongData[i][key];
-            break;
-          case 'collectionPrice':
-            newSongDataArray[i].CollectionPrice = rawSongData[i][key];
-            break;
-          case 'previewUrl':
-            newSongDataArray[i].Play = rawSongData[i][key];
-            break;
-          // case 'kind':
-          //   newSongDataArray[i].Type = rawSongData[i][key];
-          //   break;
-          case 'trackName':
-            newSongDataArray[i].TrackName = rawSongData[i][key];
-            break;
-        }
-      }
-    }
+    // for(var i = 0; i < rawSongData.length; i++) {
+    //   newSongDataArray[i] = {};
+    //   for(var key in rawSongData[i]) {
+    //     switch(key) {
+    //       case 'artworkUrl100':
+    //         newSongDataArray[i].AlbumArt = rawSongData[i][key];
+    //         break;
+    //       case 'artistName':
+    //         newSongDataArray[i].Artist = rawSongData[i][key];
+    //         break;
+    //       case 'collectionName':
+    //         newSongDataArray[i].Collection = rawSongData[i][key];
+    //         break;
+    //       case 'collectionPrice':
+    //         newSongDataArray[i].CollectionPrice = rawSongData[i][key];
+    //         break;
+    //       case 'previewUrl':
+    //         newSongDataArray[i].Play = rawSongData[i][key];
+    //         break;
+    //       // case 'kind':
+    //       //   newSongDataArray[i].Type = rawSongData[i][key];
+    //       //   break;
+    //       case 'trackName':
+    //         newSongDataArray[i].TrackName = rawSongData[i][key];
+    //         break;
+    //     }
+    //   }
+    // }
 
-    return newSongDataArray;
+    // return newSongDataArray;
+
+    //VERSION 2 of sortData
+    $scope.songData = rawSongData.map(function(itunesData) {
+      return {
+        AlbumArt: itunesData.artworkUrl100,
+        artistName: itunesData.artistName,
+        Collection: itunesData.collectionName,
+        CollectionPrice: itunesData.collectionPrice,
+        Play: itunesData.previewUrl,
+        TrackName: itunesData.trackName
+      };
+    });
   }
 
 
