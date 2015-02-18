@@ -29,7 +29,11 @@ app.controller('mainCtrl', function($scope, itunesService){
   //*remember, that method should be expecting an artist name. The artist name is coming from the input box on index.html, head over there and check if that input box is tied to any specific model we could use.
   //Also note that that method should be retuning a promise, so you could use .then in this function.
     
-    //Code here
+  $scope.getSongData = function() {
+    itunesService.getByArtist($scope.artist).then(function(data) {
+      $scope.songData = sortData(data);
+    });
+  }
 
 
   //Check that the above method is working by entering a name into the input field on your web app, and then console.log the result
@@ -49,7 +53,37 @@ app.controller('mainCtrl', function($scope, itunesService){
   */
   //the iTunes API is going to give you a lot more details than ng-grid wants. Create a new array and then loop through the iTunes data pushing into your new array objects that look like the above data.
 
-    //Code here
+  function sortData(rawSongData) {
+    var newSongDataArray = [];
+    
+    for(var i = 0; i < rawSongData.length; i++) {
+      newSongDataArray[i] = {};
+      for(var key in rawSongData[i]) {
+        switch(key) {
+          case 'artworkUrl30':
+            newSongDataArray[i].AlbumArt = rawSongData[i][key];
+            break;
+          case 'artistName':
+            newSongDataArray[i].Artist = rawSongData[i][key];
+            break;
+          case 'collectionName':
+            newSongDataArray[i].Collection = rawSongData[i][key];
+            break;
+          case 'collectionPrice':
+            newSongDataArray[i].CollectionPrice = rawSongData[i][key];
+            break;
+          case 'previewUrl':
+            newSongDataArray[i].Play = rawSongData[i][key];
+            break;
+          case 'kind':
+            newSongDataArray[i].Type = rawSongData[i][key];
+            break;
+        }
+      }
+    }
+
+    return newSongDataArray;
+  }
 
 
   //Once you have that final data array, you simply need to put it on the scope (or more specifically on the scope as songData). Once you do this ($scope.songData = myFinalArray) then ng-grid will see that and populate the page.
