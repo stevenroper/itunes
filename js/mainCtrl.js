@@ -93,7 +93,7 @@ app.controller('mainCtrl', function($scope, itunesService){
     $scope.songData = rawSongData.map(function(itunesData) {
       return {
         AlbumArt: itunesData.artworkUrl100,
-        artistName: itunesData.artistName,
+        Artist: itunesData.artistName,
         Collection: itunesData.collectionName,
         CollectionPrice: itunesData.collectionPrice,
         Play: itunesData.previewUrl,
