@@ -16,7 +16,7 @@
           </div>
           <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
-              <input type="text" class="form-control" ng-model="defaultInfo.searchTerm" placeholder="Search" ng-change='getSongData()'>
+              <input type="text" class="form-control" ng-model="defaultInfo.searchTerm" placeholder="Search">
               <button class="btn btn-primary" ng-click="getSongData()"> Submit </button>
             </div>
           </form>
@@ -28,6 +28,7 @@
                 <option value='Collection'>Collection Name</option>
                 <option value='CollectionPrice'>Collection Price</option>
               </select>
+              <input type='text' class='form-control' ng-model='filterOptions.filterText' placeholder='Search Filtered Data'>
             </div>
           </form>
         </div>

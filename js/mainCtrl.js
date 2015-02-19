@@ -6,12 +6,17 @@ app.controller('mainCtrl', function($scope, itunesService){
   //this means when you make your iTunes request, you'll need to get back the information, parse it accordingly, then set it to songData on the scope -> $scope.songData = ...
   $scope.defaultInfo = {
     searchTerm: '',
-    sortBy: 'Artist'
+    sortBy: 'Artist',
+  };
+
+  $scope.filterOptions = {
+    filterText: ''
   };
 
   $scope.gridOptions = { 
       data: 'songData',
       height: '110px',
+      filterOptions: $scope.filterOptions,
       sortInfo: {fields: ['Song', 'Artist', 'Collection', 'Type'], directions: ['asc']},
       columnDefs: [
         {field: 'Play', displayName: 'Play', width: '40px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}"><img src="http://www.icty.org/x/image/Miscellaneous/play_icon30x30.png"></a></div>'},
