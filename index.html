@@ -16,8 +16,18 @@
           </div>
           <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
-              <input type="text" class="form-control" ng-model="artist" placeholder="Artist Name" >
+              <input type="text" class="form-control" ng-model="defaultInfo.searchTerm" placeholder="Search" ng-change='getSongData()'>
               <button class="btn btn-primary" ng-click="getSongData()"> Submit </button>
+            </div>
+          </form>
+          <form class='navbar-form navbar-right'>
+            <div class='form-group'>
+              Sort By:
+              <select class='form-control' ng-model='defaultInfo.sortBy' ng-change='sortGrid()'>
+                <option value='Artist'>Artist</option>
+                <option value='Collection'>Collection Name</option>
+                <option value='CollectionPrice'>Collection Price</option>
+              </select>
             </div>
           </form>
         </div>
